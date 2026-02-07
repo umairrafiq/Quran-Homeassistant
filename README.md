@@ -175,15 +175,41 @@ Go to **Settings → Automations & Scenes → Scripts → Create Script** and ad
 ```yaml
 alias: Play Daily Ayah
 icon: mdi:book-open-page-variant
+description: Play today's Quran ayah with Arabic recitation and translation
 sequence:
-  - service: media_player.play_media
+  # Announce surah name
+  - action: tts.speak
+    target:
+      entity_id: tts.piper  # Change to your TTS entity
+    data:
+      cache: true
+      media_player_entity_id: media_player.living_room  # Change this!
+      message: >-
+        Ayah of the day from Surah {{ state_attr('sensor.quran_daily_ayah', 'surah_name') }}, 
+        verse {{ state_attr('sensor.quran_daily_ayah', 'ayah_in_surah') }}
+  - delay:
+      seconds: 4
+  # Play Arabic recitation
+  - action: media_player.play_media
     target:
       entity_id: media_player.living_room  # Change this!
     data:
       media_content_type: music
       media_content_id: "{{ states('sensor.quran_daily_ayah_audio') }}"
+  - delay:
+      seconds: 15
+  # Speak translation
+  - action: tts.speak
+    target:
+      entity_id: tts.piper  # Change to your TTS entity
+    data:
+      cache: true
+      media_player_entity_id: media_player.living_room  # Change this!
+      message: "{{ state_attr('sensor.quran_daily_ayah', 'full_text') }}"
 mode: single
 ```
+
+> 💡 **No TTS?** See [`examples/scripts.yaml`](examples/scripts.yaml) for a simple audio-only version.
 
 ### Step 2: Add Dashboard Card
 
