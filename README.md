@@ -18,17 +18,23 @@ A Home Assistant integration for the Holy Quran, powered by [AlQuran.cloud API](
 
 ### HACS (Recommended)
 
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=umairrafiq&repository=Quran-Homeassistant&category=integration)
+
+**Or manually:**
+
 1. Open HACS in Home Assistant
-2. Click on "Integrations"
-3. Click the three dots menu → "Custom repositories"
-4. Add `https://github.com/umairrafiq/Quran-Homeassistant` as an Integration
-5. Search for "Quran" and install
-6. Restart Home Assistant
+2. Click on **Integrations**
+3. Click the **⋮** menu (top right) → **Custom repositories**
+4. Add repository URL: `https://github.com/umairrafiq/Quran-Homeassistant`
+5. Select category: **Integration**
+6. Click **Add**
+7. Search for "Quran" and click **Download**
+8. Restart Home Assistant
 
 ### Manual Installation
 
-1. Download the latest release
-2. Copy `custom_components/quran` to your `config/custom_components/` directory
+1. Download the [latest release](https://github.com/umairrafiq/Quran-Homeassistant/releases)
+2. Extract and copy `custom_components/quran` to your `config/custom_components/` directory
 3. Restart Home Assistant
 
 ## Configuration
