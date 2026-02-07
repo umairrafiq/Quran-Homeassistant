@@ -1,0 +1,304 @@
+###############################################
+#  Quran Dashboard - Example Lovelace YAML   #
+#  Add this to your dashboard or create a    #
+#  new view in your lovelace config          #
+###############################################
+
+type: vertical-stack
+cards:
+  # ===== HEADER =====
+  - type: markdown
+    content: |
+      # 🕌 Quran Dashboard
+
+  # ===== DAILY AYAH CARD =====
+  - type: custom:mushroom-template-card
+    primary: Ayah of the Day
+    secondary: >-
+      {{ state_attr('sensor.quran_daily_ayah', 'surah_name') }} 
+      ({{ state_attr('sensor.quran_daily_ayah', 'reference') }})
+    icon: mdi:book-open-page-variant
+    icon_color: green
+    tap_action:
+      action: none
+    # Requires mushroom cards from HACS
+    # Alternative below if you don't have mushroom
+
+  # ===== DAILY AYAH - ARABIC TEXT =====
+  - type: markdown
+    content: |
+      <p style="font-size: 1.8em; text-align: right; direction: rtl; line-height: 2;">
+      {{ states('sensor.quran_daily_ayah_arabic') }}
+      </p>
+    card_mod:
+      style: |
+        ha-card {
+          background: rgba(0, 100, 0, 0.1);
+          border-right: 4px solid green;
+        }
+
+  # ===== DAILY AYAH - TRANSLATION =====
+  - type: markdown
+    content: |
+      > {{ state_attr('sensor.quran_daily_ayah', 'full_text') }}
+      
+      **— {{ state_attr('sensor.quran_daily_ayah', 'surah_name') }}** 
+      ({{ state_attr('sensor.quran_daily_ayah', 'surah_translation') }}) 
+      {{ state_attr('sensor.quran_daily_ayah', 'reference') }}
+
+  # ===== PLAY DAILY AYAH BUTTON =====
+  - type: button
+    name: Play Daily Ayah
+    icon: mdi:play-circle
+    tap_action:
+      action: call-service
+      service: media_player.play_media
+      data:
+        entity_id: media_player.living_room  # Change to your media player
+        media_content_type: music
+        media_content_id: "{{ states('sensor.quran_daily_ayah_audio') }}"
+    hold_action:
+      action: more-info
+      entity: sensor.quran_daily_ayah
+
+  # ===== QUICK ACTIONS =====
+  - type: horizontal-stack
+    cards:
+      - type: button
+        name: Ayat ul Kursi
+        icon: mdi:shield-cross
+        tap_action:
+          action: call-service
+          service: quran.play_ayat_ul_kursi
+          data:
+            media_player: media_player.living_room  # Change this
+
+      - type: button
+        name: Al-Fatiha
+        icon: mdi:book-open-variant
+        tap_action:
+          action: call-service
+          service: quran.play_surah
+          data:
+            surah: 1
+            media_player: media_player.living_room  # Change this
+
+      - type: button
+        name: Ar-Rahman
+        icon: mdi:heart
+        tap_action:
+          action: call-service
+          service: quran.play_surah
+          data:
+            surah: 55
+            media_player: media_player.living_room  # Change this
+
+      - type: button
+        name: Al-Mulk
+        icon: mdi:crown
+        tap_action:
+          action: call-service
+          service: quran.play_surah
+          data:
+            surah: 67
+            media_player: media_player.living_room  # Change this
+
+  # ===== SURAH SELECTOR (Requires input_number helper) =====
+  # First create an input_number helper:
+  # Settings → Devices & Services → Helpers → Create Helper → Number
+  # Name: Surah Number, Min: 1, Max: 114, Step: 1
+  - type: entities
+    title: Play Any Surah
+    entities:
+      - entity: input_number.surah_number
+        name: Select Surah (1-114)
+      - type: button
+        name: Play Selected Surah
+        icon: mdi:play
+        action_name: Play
+        tap_action:
+          action: call-service
+          service: quran.play_surah
+          data:
+            surah: "{{ states('input_number.surah_number') | int }}"
+            media_player: media_player.living_room  # Change this
+
+  # ===== LAST 10 SURAHS (Juz Amma favorites) =====
+  - type: grid
+    columns: 5
+    square: true
+    title: Short Surahs
+    cards:
+      - type: button
+        name: "105"
+        icon: mdi:elephant
+        show_name: true
+        tap_action:
+          action: call-service
+          service: quran.play_surah
+          data:
+            surah: 105
+            media_player: media_player.living_room
+
+      - type: button
+        name: "108"
+        icon: mdi:water
+        tap_action:
+          action: call-service
+          service: quran.play_surah
+          data:
+            surah: 108
+            media_player: media_player.living_room
+
+      - type: button
+        name: "110"
+        icon: mdi:hand-clap
+        tap_action:
+          action: call-service
+          service: quran.play_surah
+          data:
+            surah: 110
+            media_player: media_player.living_room
+
+      - type: button
+        name: "112"
+        icon: mdi:numeric-1-circle
+        tap_action:
+          action: call-service
+          service: quran.play_surah
+          data:
+            surah: 112
+            media_player: media_player.living_room
+
+      - type: button
+        name: "114"
+        icon: mdi:account-group
+        tap_action:
+          action: call-service
+          service: quran.play_surah
+          data:
+            surah: 114
+            media_player: media_player.living_room
+
+  # ===== FRIDAY SPECIAL =====
+  - type: conditional
+    conditions:
+      - condition: state
+        entity: sensor.day_of_week  # You may need to create this
+        state: "Friday"
+    card:
+      type: button
+      name: 📖 Surah Al-Kahf (Friday Sunnah)
+      icon: mdi:cave
+      icon_height: 50px
+      tap_action:
+        action: call-service
+        service: quran.play_surah
+        data:
+          surah: 18
+          media_player: media_player.living_room
+
+
+###############################################
+#  SIMPLE VERSION (No custom cards needed)   #
+###############################################
+---
+# If you don't have mushroom/card-mod, use this simpler version:
+
+type: vertical-stack
+cards:
+  - type: markdown
+    title: 📖 Ayah of the Day
+    content: |
+      ## {{ state_attr('sensor.quran_daily_ayah', 'surah_name') }}
+      **{{ state_attr('sensor.quran_daily_ayah', 'reference') }}**
+      
+      ---
+      
+      <p style="font-size: 1.5em; text-align: right; direction: rtl;">
+      {{ states('sensor.quran_daily_ayah_arabic') }}
+      </p>
+      
+      ---
+      
+      > {{ state_attr('sensor.quran_daily_ayah', 'full_text') }}
+
+  - type: horizontal-stack
+    cards:
+      - type: button
+        name: Play Ayah
+        icon: mdi:play
+        tap_action:
+          action: call-service
+          service: media_player.play_media
+          target:
+            entity_id: media_player.living_room
+          data:
+            media_content_type: music
+            media_content_id: "{{ states('sensor.quran_daily_ayah_audio') }}"
+
+      - type: button
+        name: Ayat ul Kursi
+        icon: mdi:shield
+        tap_action:
+          action: call-service
+          service: quran.play_ayat_ul_kursi
+          data:
+            media_player: media_player.living_room
+
+  - type: entities
+    title: Quick Play
+    entities:
+      - type: call-service
+        name: Al-Fatiha
+        icon: mdi:numeric-1-box
+        action_name: Play
+        service: quran.play_surah
+        data:
+          surah: 1
+          media_player: media_player.living_room
+
+      - type: call-service
+        name: Al-Baqarah (Last 2 Ayahs)
+        icon: mdi:numeric-2-box
+        action_name: Play
+        service: quran.play_ayah
+        data:
+          ayah: 6235
+          media_player: media_player.living_room
+
+      - type: call-service
+        name: Yasin
+        icon: mdi:numeric-36-box
+        action_name: Play
+        service: quran.play_surah
+        data:
+          surah: 36
+          media_player: media_player.living_room
+
+      - type: call-service
+        name: Ar-Rahman
+        icon: mdi:heart
+        action_name: Play
+        service: quran.play_surah
+        data:
+          surah: 55
+          media_player: media_player.living_room
+
+      - type: call-service
+        name: Al-Mulk
+        icon: mdi:crown
+        action_name: Play
+        service: quran.play_surah
+        data:
+          surah: 67
+          media_player: media_player.living_room
+
+      - type: call-service
+        name: Al-Kahf (Friday)
+        icon: mdi:calendar-weekend
+        action_name: Play
+        service: quran.play_surah
+        data:
+          surah: 18
+          media_player: media_player.living_room
