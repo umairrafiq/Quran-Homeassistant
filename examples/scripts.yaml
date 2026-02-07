@@ -1,0 +1,47 @@
+# Add these scripts to your scripts.yaml or via UI
+# Settings → Automations & Scenes → Scripts → Create Script
+
+# Script to play the daily ayah
+play_daily_ayah:
+  alias: Play Daily Ayah
+  icon: mdi:book-open-page-variant
+  description: Play today's Quran ayah on a speaker
+  fields:
+    media_player:
+      description: Media player to use
+      example: media_player.living_room
+      default: media_player.living_room
+      selector:
+        entity:
+          domain: media_player
+  sequence:
+    - service: media_player.play_media
+      target:
+        entity_id: "{{ media_player }}"
+      data:
+        media_content_type: music
+        media_content_id: "{{ states('sensor.quran_daily_ayah_audio') }}"
+
+# Script to play any surah
+play_quran_surah:
+  alias: Play Quran Surah
+  icon: mdi:book-open-variant
+  fields:
+    surah:
+      description: Surah number (1-114)
+      example: 55
+      selector:
+        number:
+          min: 1
+          max: 114
+    media_player:
+      description: Media player to use
+      example: media_player.living_room
+      selector:
+        entity:
+          domain: media_player
+  sequence:
+    - service: quran.play_surah
+      data:
+        surah: "{{ surah }}"
+        media_player: "{{ media_player }}"

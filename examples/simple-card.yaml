@@ -1,0 +1,62 @@
+# Simple Quran Card - Copy this into a Manual Card
+# Dashboard → Edit → Add Card → Manual → Paste this
+
+type: vertical-stack
+cards:
+  - type: markdown
+    title: 📖 Ayah of the Day
+    content: |
+      **{{ state_attr('sensor.quran_daily_ayah', 'surah_name') }}** 
+      ({{ state_attr('sensor.quran_daily_ayah', 'reference') }})
+      
+      <p style="font-size: 1.4em; text-align: right; direction: rtl; line-height: 1.8;">
+      {{ states('sensor.quran_daily_ayah_arabic') }}
+      </p>
+      
+      ---
+      
+      > {{ state_attr('sensor.quran_daily_ayah', 'full_text') }}
+
+  - type: button
+    name: ▶️ Play Daily Ayah
+    icon: mdi:play-circle
+    icon_height: 40px
+    tap_action:
+      action: call-service
+      service: media_player.play_media
+      target:
+        entity_id: media_player.living_room
+      data:
+        media_content_type: music
+        media_content_id: https://cdn.islamic.network/quran/audio/128/ar.alafasy/1.mp3
+
+  - type: horizontal-stack
+    cards:
+      - type: button
+        name: Ayat ul Kursi
+        icon: mdi:shield-cross
+        tap_action:
+          action: call-service
+          service: quran.play_ayat_ul_kursi
+          data:
+            media_player: media_player.living_room
+
+      - type: button
+        name: Al-Fatiha
+        icon: mdi:book-open-variant
+        tap_action:
+          action: call-service
+          service: quran.play_surah
+          data:
+            surah: 1
+            media_player: media_player.living_room
+
+      - type: button
+        name: Ar-Rahman
+        icon: mdi:heart
+        tap_action:
+          action: call-service
+          service: quran.play_surah
+          data:
+            surah: 55
+            media_player: media_player.living_room

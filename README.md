@@ -168,63 +168,71 @@ content: |
 
 ## Example Dashboard
 
-A complete dashboard example is available in [`examples/dashboard.yaml`](examples/dashboard.yaml).
+### Step 1: Create a Script (Required for Play Button)
 
-![Dashboard Preview](https://via.placeholder.com/800x600/1a1a2e/ffffff?text=Quran+Dashboard)
+Go to **Settings → Automations & Scenes → Scripts → Create Script** and add:
 
-### Quick Dashboard Setup
+```yaml
+alias: Play Daily Ayah
+icon: mdi:book-open-page-variant
+sequence:
+  - service: media_player.play_media
+    target:
+      entity_id: media_player.living_room  # Change this!
+    data:
+      media_content_type: music
+      media_content_id: "{{ states('sensor.quran_daily_ayah_audio') }}"
+mode: single
+```
 
-Copy this to your Lovelace dashboard:
+### Step 2: Add Dashboard Card
+
+Go to your dashboard → **Edit** → **Add Card** → **Manual** → Paste:
 
 ```yaml
 type: vertical-stack
 cards:
-  # Daily Ayah Display
   - type: markdown
     title: 📖 Ayah of the Day
     content: |
-      ## {{ state_attr('sensor.quran_daily_ayah', 'surah_name') }}
-      **{{ state_attr('sensor.quran_daily_ayah', 'reference') }}**
+      **{{ state_attr('sensor.quran_daily_ayah', 'surah_name') }}** 
+      {{ state_attr('sensor.quran_daily_ayah', 'reference') }}
       
-      <p style="font-size: 1.5em; text-align: right; direction: rtl;">
+      <p style="font-size: 1.5em; text-align: right; direction: rtl; line-height: 1.8;">
       {{ states('sensor.quran_daily_ayah_arabic') }}
       </p>
       
+      ---
       > {{ state_attr('sensor.quran_daily_ayah', 'full_text') }}
 
-  # Quick Play Buttons
+  - type: button
+    name: ▶️ Play Daily Ayah
+    icon: mdi:play-circle
+    icon_height: 50px
+    tap_action:
+      action: call-service
+      service: script.play_daily_ayah
+
   - type: horizontal-stack
     cards:
       - type: button
-        name: Play Ayah
-        icon: mdi:play
-        tap_action:
-          action: call-service
-          service: media_player.play_media
-          target:
-            entity_id: media_player.living_room  # Change this!
-          data:
-            media_content_type: music
-            media_content_id: "{{ states('sensor.quran_daily_ayah_audio') }}"
-
-      - type: button
         name: Ayat ul Kursi
-        icon: mdi:shield
+        icon: mdi:shield-cross
         tap_action:
           action: call-service
           service: quran.play_ayat_ul_kursi
           data:
-            media_player: media_player.living_room  # Change this!
+            media_player: media_player.living_room
 
       - type: button
         name: Al-Fatiha
-        icon: mdi:book-open
+        icon: mdi:book-open-variant
         tap_action:
           action: call-service
           service: quran.play_surah
           data:
             surah: 1
-            media_player: media_player.living_room  # Change this!
+            media_player: media_player.living_room
 
       - type: button
         name: Ar-Rahman
@@ -234,56 +242,25 @@ cards:
           service: quran.play_surah
           data:
             surah: 55
-            media_player: media_player.living_room  # Change this!
+            media_player: media_player.living_room
 
-  # Surah Quick List
-  - type: entities
-    title: Popular Surahs
-    entities:
-      - type: call-service
-        name: Yasin (36)
+      - type: button
+        name: Yasin
         icon: mdi:alpha-y-circle
-        action_name: Play
-        service: quran.play_surah
-        data:
-          surah: 36
-          media_player: media_player.living_room
-
-      - type: call-service
-        name: Al-Mulk (67)
-        icon: mdi:crown
-        action_name: Play
-        service: quran.play_surah
-        data:
-          surah: 67
-          media_player: media_player.living_room
-
-      - type: call-service
-        name: Al-Kahf - Friday (18)
-        icon: mdi:calendar-weekend
-        action_name: Play
-        service: quran.play_surah
-        data:
-          surah: 18
-          media_player: media_player.living_room
-
-      - type: call-service
-        name: Last 3 Quls (112-114)
-        icon: mdi:shield-check
-        action_name: Play
-        service: quran.play_surah
-        data:
-          surah: 112
-          media_player: media_player.living_room
+        tap_action:
+          action: call-service
+          service: quran.play_surah
+          data:
+            surah: 36
+            media_player: media_player.living_room
 ```
 
-> 💡 **Tip:** Replace `media_player.living_room` with your actual media player entity ID.
+> ⚠️ **Important:** Replace `media_player.living_room` with your actual media player entity ID!
 
-See [`examples/dashboard.yaml`](examples/dashboard.yaml) for more advanced examples including:
-- Surah number selector
-- Friday conditional card for Al-Kahf
-- Grid of short surahs (Juz Amma)
-- Mushroom card styling
+See [`examples/`](examples/) folder for:
+- [`scripts.yaml`](examples/scripts.yaml) - Helper scripts
+- [`dashboard.yaml`](examples/dashboard.yaml) - Full dashboard with surah selector
+- [`simple-card.yaml`](examples/simple-card.yaml) - Minimal card example
 
 ## Available Reciters
 
