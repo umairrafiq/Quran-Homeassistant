@@ -6,16 +6,16 @@ cards:
   - type: markdown
     title: 📖 Ayah of the Day
     content: |
-      **{{ state_attr('sensor.daily_ayah', 'surah_name') }}** 
-      ({{ state_attr('sensor.daily_ayah', 'reference') }})
+      **{{ state_attr('sensor.quran_daily_ayah', 'surah_name') }}** 
+      ({{ state_attr('sensor.quran_daily_ayah', 'reference') }})
       
       <p style="font-size: 1.4em; text-align: right; direction: rtl; line-height: 1.8;">
-      {{ states('sensor.daily_ayah_arabic') }}
+      {{ states('sensor.quran_daily_ayah_arabic') }}
       </p>
       
       ---
       
-      > {{ state_attr('sensor.daily_ayah', 'full_text') }}
+      > {{ state_attr('sensor.quran_daily_ayah', 'full_text') }}
 
   - type: button
     name: ▶️ Play Daily Ayah

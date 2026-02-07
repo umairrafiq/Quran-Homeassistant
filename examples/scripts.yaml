@@ -20,7 +20,7 @@ play_daily_ayah:
         entity_id: "{{ media_player }}"
       data:
         media_content_type: music
-        media_content_id: "{{ states('sensor.daily_ayah_audio') }}"
+        media_content_id: "{{ states('sensor.quran_daily_ayah_audio') }}"
 
 # Script to play any surah
 play_quran_surah:

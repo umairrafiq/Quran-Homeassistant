@@ -128,14 +128,15 @@ class QuranCoordinator(DataUpdateCoordinator):
 class QuranDailyAyahSensor(CoordinatorEntity, SensorEntity):
     """Sensor for daily Quran ayah (translation)."""
 
-    _attr_has_entity_name = True
-    _attr_name = "Daily Ayah"
+    _attr_has_entity_name = False
+    _attr_name = "Quran Daily Ayah"
     _attr_icon = "mdi:book-open-page-variant"
 
     def __init__(self, coordinator: QuranCoordinator, entry: ConfigEntry) -> None:
         """Initialize the sensor."""
         super().__init__(coordinator)
-        self._attr_unique_id = f"{entry.entry_id}_daily_ayah"
+        self._attr_unique_id = f"{entry.entry_id}_quran_daily_ayah"
+        self.entity_id = "sensor.quran_daily_ayah"
         self._entry = entry
 
     @property
@@ -168,14 +169,15 @@ class QuranDailyAyahSensor(CoordinatorEntity, SensorEntity):
 class QuranDailyAyahArabicSensor(CoordinatorEntity, SensorEntity):
     """Sensor for daily Quran ayah (Arabic)."""
 
-    _attr_has_entity_name = True
-    _attr_name = "Daily Ayah Arabic"
+    _attr_has_entity_name = False
+    _attr_name = "Quran Daily Ayah Arabic"
     _attr_icon = "mdi:abjad-arabic"
 
     def __init__(self, coordinator: QuranCoordinator, entry: ConfigEntry) -> None:
         """Initialize the sensor."""
         super().__init__(coordinator)
-        self._attr_unique_id = f"{entry.entry_id}_daily_ayah_arabic"
+        self._attr_unique_id = f"{entry.entry_id}_quran_daily_ayah_arabic"
+        self.entity_id = "sensor.quran_daily_ayah_arabic"
         self._entry = entry
 
     @property
@@ -202,14 +204,15 @@ class QuranDailyAyahArabicSensor(CoordinatorEntity, SensorEntity):
 class QuranDailyAyahAudioSensor(CoordinatorEntity, SensorEntity):
     """Sensor for daily Quran ayah audio URL."""
 
-    _attr_has_entity_name = True
-    _attr_name = "Daily Ayah Audio"
+    _attr_has_entity_name = False
+    _attr_name = "Quran Daily Ayah Audio"
     _attr_icon = "mdi:volume-high"
 
     def __init__(self, coordinator: QuranCoordinator, entry: ConfigEntry) -> None:
         """Initialize the sensor."""
         super().__init__(coordinator)
-        self._attr_unique_id = f"{entry.entry_id}_daily_ayah_audio"
+        self._attr_unique_id = f"{entry.entry_id}_quran_daily_ayah_audio"
+        self.entity_id = "sensor.quran_daily_ayah_audio"
         self._entry = entry
 
     @property
