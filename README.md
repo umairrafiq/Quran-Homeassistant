@@ -48,9 +48,9 @@ A Home Assistant integration for the Holy Quran, powered by [AlQuran.cloud API](
 
 | Sensor | Description |
 |--------|-------------|
-| `sensor.quran_daily_ayah` | Today's ayah (translation) |
-| `sensor.quran_daily_ayah_arabic` | Today's ayah (Arabic text) |
-| `sensor.quran_daily_ayah_audio` | Audio URL for today's ayah |
+| `sensor.daily_ayah` | Today's ayah (translation) |
+| `sensor.daily_ayah_arabic` | Today's ayah (Arabic text) |
+| `sensor.daily_ayah_audio` | Audio URL for today's ayah |
 
 ### Sensor Attributes
 
@@ -147,7 +147,7 @@ automation:
           entity_id: media_player.kitchen
         data:
           media_content_type: music
-          media_content_id: "{{ state_attr('sensor.quran_daily_ayah_audio', 'audio_url') }}"
+          media_content_id: "{{ state_attr('sensor.daily_ayah_audio', 'audio_url') }}"
 ```
 
 ### Display Daily Ayah on Dashboard
@@ -157,13 +157,13 @@ type: markdown
 content: |
   ## 📖 Ayah of the Day
   
-  **{{ state_attr('sensor.quran_daily_ayah', 'surah_name') }}** 
-  ({{ state_attr('sensor.quran_daily_ayah', 'reference') }})
+  **{{ state_attr('sensor.daily_ayah', 'surah_name') }}** 
+  ({{ state_attr('sensor.daily_ayah', 'reference') }})
   
-  > {{ state_attr('sensor.quran_daily_ayah', 'full_text') }}
+  > {{ state_attr('sensor.daily_ayah', 'full_text') }}
   
   ---
-  {{ states('sensor.quran_daily_ayah_arabic') }}
+  {{ states('sensor.daily_ayah_arabic') }}
 ```
 
 ## Example Dashboard
@@ -181,7 +181,7 @@ sequence:
       entity_id: media_player.living_room  # Change this!
     data:
       media_content_type: music
-      media_content_id: "{{ states('sensor.quran_daily_ayah_audio') }}"
+      media_content_id: "{{ states('sensor.daily_ayah_audio') }}"
 mode: single
 ```
 
@@ -195,15 +195,15 @@ cards:
   - type: markdown
     title: 📖 Ayah of the Day
     content: |
-      **{{ state_attr('sensor.quran_daily_ayah', 'surah_name') }}** 
-      {{ state_attr('sensor.quran_daily_ayah', 'reference') }}
+      **{{ state_attr('sensor.daily_ayah', 'surah_name') }}** 
+      {{ state_attr('sensor.daily_ayah', 'reference') }}
       
       <p style="font-size: 1.5em; text-align: right; direction: rtl; line-height: 1.8;">
-      {{ states('sensor.quran_daily_ayah_arabic') }}
+      {{ states('sensor.daily_ayah_arabic') }}
       </p>
       
       ---
-      > {{ state_attr('sensor.quran_daily_ayah', 'full_text') }}
+      > {{ state_attr('sensor.daily_ayah', 'full_text') }}
 
   - type: button
     name: ▶️ Play Daily Ayah

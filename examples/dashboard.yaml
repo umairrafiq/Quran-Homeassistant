@@ -15,8 +15,8 @@ cards:
   - type: custom:mushroom-template-card
     primary: Ayah of the Day
     secondary: >-
-      {{ state_attr('sensor.quran_daily_ayah', 'surah_name') }} 
-      ({{ state_attr('sensor.quran_daily_ayah', 'reference') }})
+      {{ state_attr('sensor.daily_ayah', 'surah_name') }} 
+      ({{ state_attr('sensor.daily_ayah', 'reference') }})
     icon: mdi:book-open-page-variant
     icon_color: green
     tap_action:
@@ -28,7 +28,7 @@ cards:
   - type: markdown
     content: |
       <p style="font-size: 1.8em; text-align: right; direction: rtl; line-height: 2;">
-      {{ states('sensor.quran_daily_ayah_arabic') }}
+      {{ states('sensor.daily_ayah_arabic') }}
       </p>
     card_mod:
       style: |
@@ -40,11 +40,11 @@ cards:
   # ===== DAILY AYAH - TRANSLATION =====
   - type: markdown
     content: |
-      > {{ state_attr('sensor.quran_daily_ayah', 'full_text') }}
+      > {{ state_attr('sensor.daily_ayah', 'full_text') }}
       
-      **— {{ state_attr('sensor.quran_daily_ayah', 'surah_name') }}** 
-      ({{ state_attr('sensor.quran_daily_ayah', 'surah_translation') }}) 
-      {{ state_attr('sensor.quran_daily_ayah', 'reference') }}
+      **— {{ state_attr('sensor.daily_ayah', 'surah_name') }}** 
+      ({{ state_attr('sensor.daily_ayah', 'surah_translation') }}) 
+      {{ state_attr('sensor.daily_ayah', 'reference') }}
 
   # ===== PLAY DAILY AYAH BUTTON =====
   - type: button
@@ -56,10 +56,10 @@ cards:
       data:
         entity_id: media_player.living_room  # Change to your media player
         media_content_type: music
-        media_content_id: "{{ states('sensor.quran_daily_ayah_audio') }}"
+        media_content_id: "{{ states('sensor.daily_ayah_audio') }}"
     hold_action:
       action: more-info
-      entity: sensor.quran_daily_ayah
+      entity: sensor.daily_ayah
 
   # ===== QUICK ACTIONS =====
   - type: horizontal-stack
@@ -210,18 +210,18 @@ cards:
   - type: markdown
     title: 📖 Ayah of the Day
     content: |
-      ## {{ state_attr('sensor.quran_daily_ayah', 'surah_name') }}
-      **{{ state_attr('sensor.quran_daily_ayah', 'reference') }}**
+      ## {{ state_attr('sensor.daily_ayah', 'surah_name') }}
+      **{{ state_attr('sensor.daily_ayah', 'reference') }}**
       
       ---
       
       <p style="font-size: 1.5em; text-align: right; direction: rtl;">
-      {{ states('sensor.quran_daily_ayah_arabic') }}
+      {{ states('sensor.daily_ayah_arabic') }}
       </p>
       
       ---
       
-      > {{ state_attr('sensor.quran_daily_ayah', 'full_text') }}
+      > {{ state_attr('sensor.daily_ayah', 'full_text') }}
 
   - type: horizontal-stack
     cards:
@@ -235,7 +235,7 @@ cards:
             entity_id: media_player.living_room
           data:
             media_content_type: music
-            media_content_id: "{{ states('sensor.quran_daily_ayah_audio') }}"
+            media_content_id: "{{ states('sensor.daily_ayah_audio') }}"
 
       - type: button
         name: Ayat ul Kursi
