@@ -1,0 +1,13 @@
+{
+  "domain": "quran",
+  "name": "Quran",
+  "codeowners": ["@umairrafiq"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/umairrafiq/Quran-Homeassistant",
+  "integration_type": "service",
+  "iot_class": "cloud_polling",
+  "issue_tracker": "https://github.com/umairrafiq/Quran-Homeassistant/issues",
+  "requirements": ["aiohttp>=3.8.0"],
+  "version": "1.0.0"
+}

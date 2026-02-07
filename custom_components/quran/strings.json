@@ -1,0 +1,34 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configure Quran Integration",
+        "description": "Set up the Quran integration with your preferred reciter and translation.",
+        "data": {
+          "reciter": "Reciter",
+          "translation": "Translation",
+          "daily_ayah": "Enable Daily Ayah Sensor"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to the Quran API",
+      "unknown": "Unexpected error"
+    },
+    "abort": {
+      "already_configured": "Quran integration is already configured"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Quran Options",
+        "data": {
+          "reciter": "Reciter",
+          "translation": "Translation",
+          "daily_ayah": "Enable Daily Ayah Sensor"
+        }
+      }
+    }
+  }
+}

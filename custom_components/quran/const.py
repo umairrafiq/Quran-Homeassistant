@@ -1,0 +1,163 @@
+"""Constants for the Quran integration."""
+
+DOMAIN = "quran"
+
+# API
+API_BASE_URL = "https://api.alquran.cloud/v1"
+
+# Config
+CONF_RECITER = "reciter"
+CONF_TRANSLATION = "translation"
+CONF_DAILY_AYAH = "daily_ayah"
+
+# Defaults
+DEFAULT_RECITER = "ar.alafasy"
+DEFAULT_TRANSLATION = "en.asad"
+
+# Popular reciters
+RECITERS = {
+    "ar.alafasy": "Mishary Rashid Al-Afasy",
+    "ar.abdulbasitmurattal": "Abdul Basit (Murattal)",
+    "ar.abdurrahmaansudais": "Abdurrahman As-Sudais",
+    "ar.minshawi": "Mohamed Siddiq Al-Minshawi",
+    "ar.husary": "Mahmoud Khalil Al-Husary",
+    "ar.abdulsamad": "Abdul Samad",
+    "ar.shaatree": "Abu Bakr Ash-Shaatree",
+    "ar.ahmedajamy": "Ahmed Al-Ajamy",
+}
+
+# Popular translations
+TRANSLATIONS = {
+    "en.asad": "Muhammad Asad (English)",
+    "en.pickthall": "Pickthall (English)",
+    "en.sahih": "Saheeh International (English)",
+    "en.yusufali": "Yusuf Ali (English)",
+    "ur.jalandhry": "Fateh Muhammad Jalandhry (Urdu)",
+    "ur.ahmedali": "Ahmed Ali (Urdu)",
+    "fr.hamidullah": "Hamidullah (French)",
+    "de.bubenheim": "Bubenheim & Elyas (German)",
+    "tr.diyanet": "Diyanet Isleri (Turkish)",
+    "id.indonesian": "Indonesian Ministry (Indonesian)",
+}
+
+# Surah names
+SURAH_NAMES = {
+    1: ("Al-Faatiha", "The Opening"),
+    2: ("Al-Baqara", "The Cow"),
+    3: ("Aal-i-Imraan", "The Family of Imraan"),
+    4: ("An-Nisaa", "The Women"),
+    5: ("Al-Maaida", "The Table"),
+    6: ("Al-An'aam", "The Cattle"),
+    7: ("Al-A'raaf", "The Heights"),
+    8: ("Al-Anfaal", "The Spoils of War"),
+    9: ("At-Tawba", "The Repentance"),
+    10: ("Yunus", "Jonah"),
+    11: ("Hud", "Hud"),
+    12: ("Yusuf", "Joseph"),
+    13: ("Ar-Ra'd", "The Thunder"),
+    14: ("Ibrahim", "Abraham"),
+    15: ("Al-Hijr", "The Rocky Tract"),
+    16: ("An-Nahl", "The Bee"),
+    17: ("Al-Israa", "The Night Journey"),
+    18: ("Al-Kahf", "The Cave"),
+    19: ("Maryam", "Mary"),
+    20: ("Taa-Haa", "Taa-Haa"),
+    21: ("Al-Anbiyaa", "The Prophets"),
+    22: ("Al-Hajj", "The Pilgrimage"),
+    23: ("Al-Muminoon", "The Believers"),
+    24: ("An-Noor", "The Light"),
+    25: ("Al-Furqaan", "The Criterion"),
+    26: ("Ash-Shu'araa", "The Poets"),
+    27: ("An-Naml", "The Ant"),
+    28: ("Al-Qasas", "The Stories"),
+    29: ("Al-Ankaboot", "The Spider"),
+    30: ("Ar-Room", "The Romans"),
+    31: ("Luqman", "Luqman"),
+    32: ("As-Sajda", "The Prostration"),
+    33: ("Al-Ahzaab", "The Combined Forces"),
+    34: ("Saba", "Sheba"),
+    35: ("Faatir", "Originator"),
+    36: ("Yaseen", "Yaseen"),
+    37: ("As-Saaffaat", "Those Who Set The Ranks"),
+    38: ("Saad", "Saad"),
+    39: ("Az-Zumar", "The Troops"),
+    40: ("Ghafir", "The Forgiver"),
+    41: ("Fussilat", "Explained in Detail"),
+    42: ("Ash-Shura", "The Consultation"),
+    43: ("Az-Zukhruf", "The Ornaments of Gold"),
+    44: ("Ad-Dukhaan", "The Smoke"),
+    45: ("Al-Jaathiya", "The Crouching"),
+    46: ("Al-Ahqaf", "The Wind-Curved Sandhills"),
+    47: ("Muhammad", "Muhammad"),
+    48: ("Al-Fath", "The Victory"),
+    49: ("Al-Hujuraat", "The Rooms"),
+    50: ("Qaaf", "Qaaf"),
+    51: ("Adh-Dhaariyat", "The Winnowing Winds"),
+    52: ("At-Tur", "The Mount"),
+    53: ("An-Najm", "The Star"),
+    54: ("Al-Qamar", "The Moon"),
+    55: ("Ar-Rahman", "The Beneficent"),
+    56: ("Al-Waaqia", "The Inevitable"),
+    57: ("Al-Hadid", "The Iron"),
+    58: ("Al-Mujaadila", "The Pleading Woman"),
+    59: ("Al-Hashr", "The Exile"),
+    60: ("Al-Mumtahana", "She that is Examined"),
+    61: ("As-Saff", "The Ranks"),
+    62: ("Al-Jumu'a", "The Congregation"),
+    63: ("Al-Munaafiqoon", "The Hypocrites"),
+    64: ("At-Taghaabun", "The Mutual Disillusion"),
+    65: ("At-Talaaq", "The Divorce"),
+    66: ("At-Tahrim", "The Prohibition"),
+    67: ("Al-Mulk", "The Sovereignty"),
+    68: ("Al-Qalam", "The Pen"),
+    69: ("Al-Haaqqa", "The Reality"),
+    70: ("Al-Ma'aarij", "The Ascending Stairways"),
+    71: ("Nooh", "Noah"),
+    72: ("Al-Jinn", "The Jinn"),
+    73: ("Al-Muzzammil", "The Enshrouded One"),
+    74: ("Al-Muddaththir", "The Cloaked One"),
+    75: ("Al-Qiyaama", "The Resurrection"),
+    76: ("Al-Insaan", "The Man"),
+    77: ("Al-Mursalaat", "The Emissaries"),
+    78: ("An-Naba", "The Tidings"),
+    79: ("An-Naazi'aat", "Those Who Drag Forth"),
+    80: ("Abasa", "He Frowned"),
+    81: ("At-Takwir", "The Overthrowing"),
+    82: ("Al-Infitaar", "The Cleaving"),
+    83: ("Al-Mutaffifin", "The Defrauding"),
+    84: ("Al-Inshiqaaq", "The Sundering"),
+    85: ("Al-Burooj", "The Mansions of the Stars"),
+    86: ("At-Taariq", "The Morning Star"),
+    87: ("Al-A'laa", "The Most High"),
+    88: ("Al-Ghaashiya", "The Overwhelming"),
+    89: ("Al-Fajr", "The Dawn"),
+    90: ("Al-Balad", "The City"),
+    91: ("Ash-Shams", "The Sun"),
+    92: ("Al-Layl", "The Night"),
+    93: ("Ad-Dhuhaa", "The Morning Hours"),
+    94: ("Ash-Sharh", "The Relief"),
+    95: ("At-Tin", "The Fig"),
+    96: ("Al-Alaq", "The Clot"),
+    97: ("Al-Qadr", "The Power"),
+    98: ("Al-Bayyina", "The Clear Proof"),
+    99: ("Az-Zalzala", "The Earthquake"),
+    100: ("Al-Aadiyaat", "The Courser"),
+    101: ("Al-Qaari'a", "The Calamity"),
+    102: ("At-Takaathur", "The Rivalry in World Increase"),
+    103: ("Al-Asr", "The Declining Day"),
+    104: ("Al-Humaza", "The Traducer"),
+    105: ("Al-Fil", "The Elephant"),
+    106: ("Quraish", "Quraish"),
+    107: ("Al-Maa'un", "The Small Kindnesses"),
+    108: ("Al-Kawthar", "The Abundance"),
+    109: ("Al-Kaafiroon", "The Disbelievers"),
+    110: ("An-Nasr", "The Divine Support"),
+    111: ("Al-Masad", "The Palm Fiber"),
+    112: ("Al-Ikhlaas", "The Sincerity"),
+    113: ("Al-Falaq", "The Daybreak"),
+    114: ("An-Naas", "The Mankind"),
+}
+
+# Special ayahs
+AYAT_UL_KURSI = 262  # 2:255
+AYAH_COUNT = 6236

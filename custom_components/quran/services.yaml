@@ -1,0 +1,104 @@
+play_surah:
+  name: Play Surah
+  description: Play a complete Surah on a media player.
+  fields:
+    surah:
+      name: Surah Number
+      description: The surah number (1-114).
+      required: true
+      example: 1
+      selector:
+        number:
+          min: 1
+          max: 114
+          mode: box
+    media_player:
+      name: Media Player
+      description: The media player to play on.
+      required: true
+      example: media_player.living_room
+      selector:
+        entity:
+          domain: media_player
+    reciter:
+      name: Reciter
+      description: The reciter to use (optional, uses default if not specified).
+      required: false
+      example: ar.alafasy
+      selector:
+        select:
+          options:
+            - label: "Mishary Rashid Al-Afasy"
+              value: "ar.alafasy"
+            - label: "Abdul Basit (Murattal)"
+              value: "ar.abdulbasitmurattal"
+            - label: "Abdurrahman As-Sudais"
+              value: "ar.abdurrahmaansudais"
+            - label: "Al-Minshawi"
+              value: "ar.minshawi"
+            - label: "Al-Husary"
+              value: "ar.husary"
+
+play_ayah:
+  name: Play Ayah
+  description: Play a specific ayah on a media player.
+  fields:
+    ayah:
+      name: Ayah Number
+      description: The absolute ayah number (1-6236).
+      required: true
+      example: 262
+      selector:
+        number:
+          min: 1
+          max: 6236
+          mode: box
+    media_player:
+      name: Media Player
+      description: The media player to play on.
+      required: true
+      example: media_player.living_room
+      selector:
+        entity:
+          domain: media_player
+    reciter:
+      name: Reciter
+      description: The reciter to use (optional).
+      required: false
+      example: ar.alafasy
+      selector:
+        select:
+          options:
+            - label: "Mishary Rashid Al-Afasy"
+              value: "ar.alafasy"
+            - label: "Abdul Basit (Murattal)"
+              value: "ar.abdulbasitmurattal"
+            - label: "Abdurrahman As-Sudais"
+              value: "ar.abdurrahmaansudais"
+
+play_ayat_ul_kursi:
+  name: Play Ayat ul Kursi
+  description: Play Ayat ul Kursi (2:255) on a media player.
+  fields:
+    media_player:
+      name: Media Player
+      description: The media player to play on.
+      required: true
+      example: media_player.living_room
+      selector:
+        entity:
+          domain: media_player
+    reciter:
+      name: Reciter
+      description: The reciter to use (optional).
+      required: false
+      example: ar.alafasy
+      selector:
+        select:
+          options:
+            - label: "Mishary Rashid Al-Afasy"
+              value: "ar.alafasy"
+            - label: "Abdul Basit (Murattal)"
+              value: "ar.abdulbasitmurattal"
+            - label: "Abdurrahman As-Sudais"
+              value: "ar.abdurrahmaansudais"
