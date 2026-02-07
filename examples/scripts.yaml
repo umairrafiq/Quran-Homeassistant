@@ -1,26 +1,55 @@
 # Add these scripts to your scripts.yaml or via UI
 # Settings → Automations & Scenes → Scripts → Create Script
 
-# Script to play the daily ayah
+# Script to play the daily ayah with Arabic + Translation
 play_daily_ayah:
   alias: Play Daily Ayah
   icon: mdi:book-open-page-variant
-  description: Play today's Quran ayah on a speaker
-  fields:
-    media_player:
-      description: Media player to use
-      example: media_player.living_room
-      default: media_player.living_room
-      selector:
-        entity:
-          domain: media_player
+  description: Play today's Quran ayah with Arabic recitation and translation
   sequence:
-    - service: media_player.play_media
+    # Announce the surah name first
+    - action: tts.speak
       target:
-        entity_id: "{{ media_player }}"
+        entity_id: tts.piper  # Change to your TTS entity
+      data:
+        cache: true
+        media_player_entity_id: media_player.living_room  # Change to your speaker
+        message: >-
+          Ayah of the day from Surah {{ state_attr('sensor.quran_daily_ayah', 'surah_name') }}, 
+          verse {{ state_attr('sensor.quran_daily_ayah', 'ayah_in_surah') }}
+    - delay:
+        seconds: 4
+    # Play Arabic recitation
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.living_room  # Change to your speaker
       data:
         media_content_type: music
         media_content_id: "{{ states('sensor.quran_daily_ayah_audio') }}"
+    - delay:
+        seconds: 15  # Adjust based on typical ayah length
+    # Speak the translation
+    - action: tts.speak
+      target:
+        entity_id: tts.piper  # Change to your TTS entity
+      data:
+        cache: true
+        media_player_entity_id: media_player.living_room  # Change to your speaker
+        message: "{{ state_attr('sensor.quran_daily_ayah', 'full_text') }}"
+  mode: single
+
+# Simple version - Arabic audio only (no TTS needed)
+play_daily_ayah_simple:
+  alias: Play Daily Ayah (Audio Only)
+  icon: mdi:book-open-page-variant
+  sequence:
+    - action: media_player.play_media
+      target:
+        entity_id: media_player.living_room  # Change to your speaker
+      data:
+        media_content_type: music
+        media_content_id: "{{ states('sensor.quran_daily_ayah_audio') }}"
+  mode: single
 
 # Script to play any surah
 play_quran_surah:
@@ -41,7 +70,8 @@ play_quran_surah:
         entity:
           domain: media_player
   sequence:
-    - service: quran.play_surah
+    - action: quran.play_surah
       data:
         surah: "{{ surah }}"
         media_player: "{{ media_player }}"
+  mode: single
